@@ -4,7 +4,6 @@ import * as BooksAPI from './api/BooksAPI'
 
 import Main from './views/Main'
 import SearchBooks from './views/SearchBooks'
-import './App.css';
 import '../node_modules/grommet-css'
 
 class App extends Component {
@@ -17,7 +16,13 @@ class App extends Component {
 		}
 	}
 
-	updatePersonalBooks = (section, id) => {
+	/**
+	 * Update Personal Books which are currently reading, wish list and read
+	 *
+	 * @param section (currentlyReading, wantToRead, read
+	 * @param id
+	 */
+	updateShelf = (section, id) => {
 		if (this.state.books[section].filter((obj) => {
 				return obj.id === id
 			}).length === 0) {
@@ -37,15 +42,15 @@ class App extends Component {
 				<Route exact path="/"
 							 render={() => (
 								 <Main books={books}
-											 updatePersonalBooks={(section, id) => {
-												 this.updatePersonalBooks(section, id)
+											 updateShelf={(section, id) => {
+												 this.updateShelf(section, id)
 											 }} />
 							 )} />
 				<Route path="/search"
 							 render={() => (
 								 <SearchBooks books={books}
-															updatePersonalBooks={(section, id) => {
-																this.updatePersonalBooks(section, id)
+															updateShelf={(section, id) => {
+																this.updateShelf(section, id)
 															}} />
 							 )} />
 			</div>

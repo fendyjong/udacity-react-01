@@ -16,7 +16,7 @@ class Main extends Component {
 
 	render() {
 		let { currentlyReading, wantToRead, read } = this.props.books
-		let { updatePersonalBooks } = this.props
+		let { updateShelf } = this.props
 
 		return (
 			<div>
@@ -37,22 +37,22 @@ class Main extends Component {
 					<Section>
 						<h1>Currently Reading</h1>
 						<BookShelf books={currentlyReading}
-											 updatePersonalBooks={(section, id) => {
-												 updatePersonalBooks(section, id)
+											 updateShelf={(section, id) => {
+												 updateShelf(section, id)
 											 }} />
 					</Section>
 					<Section>
 						<h1>Wish List</h1>
 						<BookShelf books={wantToRead}
-											 updatePersonalBooks={(section, id) => {
-												 updatePersonalBooks(section, id)
+											 updateShelf={(section, id) => {
+												 updateShelf(section, id)
 											 }} />
 					</Section>
 					<Section>
 						<h1>Read</h1>
 						<BookShelf books={read}
-											 updatePersonalBooks={(section, id) => {
-												 updatePersonalBooks(section, id)
+											 updateShelf={(section, id) => {
+												 updateShelf(section, id)
 											 }} />
 					</Section>
 				</Article>
@@ -63,7 +63,7 @@ class Main extends Component {
 
 Main.propTypes = {
 	books: PropTypes.object.isRequired,
-	updatePersonalBooks: PropTypes.func.isRequired
+	updateShelf: PropTypes.func.isRequired
 }
 
 export default Main

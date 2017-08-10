@@ -7,12 +7,12 @@ import Card from 'grommet/components/Card'
 
 class BookShelf extends Component {
 
-	bookShelfChanger = (id, selected) => {
-		switch (selected) {
+	bookShelfChanger = (id, section) => {
+		switch (section) {
 			case "currentlyReading":
 			case "wantToRead":
 			case "read":
-				this.props.updatePersonalBooks(selected, id)
+				this.props.updateShelf(section, id)
 				break;
 			default:
 				break;
@@ -71,7 +71,7 @@ class BookShelf extends Component {
 
 BookShelf.propTypes = {
 	books: PropTypes.array.isRequired,
-	updatePersonalBooks: PropTypes.func.isRequired
+	updateShelf: PropTypes.func.isRequired
 }
 
 

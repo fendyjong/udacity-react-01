@@ -13,33 +13,47 @@ import BookShelf from './BookShelf'
 class SearchBooks extends Component {
 
 	state = {
-		booksQuery: [],
+		booksQueryResult: [],
 		query: ''
 	}
 
+	/**
+	 * When the component have been mounted, get all books from the books API
+	 */
 	componentDidMount() {
 		this.getAllBooks()
 	}
 
+	/**
+	 * Get all books from the BooksAPI
+	 */
 	getAllBooks = () => {
 		BooksAPI.getAll().then(books => {
 			this.setState(() => ({
-				booksQuery: books
+				booksQueryResult: books
 			}))
 		})
 	}
 
+	/**
+	 * Whenever the user type, it will automatically search for the books if available.
+	 * If not available, return empty array
+	 *
+	 * If search query is empty, get all books
+	 *
+	 * @param query (search query)
+	 */
 	queryBooks = (query) => {
 		if (query) {
 			BooksAPI.search(query, 50).then(books => {
 				if (books) {
 					if (books.length > 0) {
 						this.setState(() => ({
-							booksQuery: books
+							booksQueryResult: books
 						}))
 					} else {
 						this.setState(() => ({
-							booksQuery: []
+							booksQueryResult: []
 						}))
 					}
 				}
@@ -49,13 +63,17 @@ class SearchBooks extends Component {
 		}
 	}
 
+	/**
+	 * Clear search query and get all books
+	 */
 	clearQuery = () => {
 		this.setState({ query: '' })
+		this.getAllBooks()
 	}
 
 	render() {
-		let { booksQuery } = this.state
-		let { updatePersonalBooks } = this.props
+		let { booksQueryResult } = this.state
+		let { updateShelf } = this.props
 
 		return (
 			<div>
@@ -82,9 +100,9 @@ class SearchBooks extends Component {
 							onDOMChange={(event) => this.queryBooks(event.target.value)} />
 					</Box>
 				</Header>
-				<BookShelf books={booksQuery}
-									 updatePersonalBooks={(section, id) => {
-										 updatePersonalBooks(section, id)
+				<BookShelf books={booksQueryResult}
+									 updateShelf={(section, id) => {
+										 updateShelf(section, id)
 									 }} />
 			</div>
 		)
@@ -92,7 +110,7 @@ class SearchBooks extends Component {
 }
 
 SearchBooks.propTypes = {
-	updatePersonalBooks: PropTypes.func.isRequired
+	updateShelf: PropTypes.func.isRequired
 }
 
 export default SearchBooks
