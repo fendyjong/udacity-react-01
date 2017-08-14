@@ -9,23 +9,15 @@ import Card from 'grommet/components/Card'
 class BookShelf extends Component {
 
 	/**
-	 * Get book by id and then update shelf state
+	 * Get book by id and update shelf state
 	 *
 	 * @param shelf
 	 * @param id
 	 */
 	bookShelfChanger = (shelf, id) => {
-		switch (shelf) {
-			case "currentlyReading":
-			case "wantToRead":
-			case "read":
-				BooksAPI.get(id).then((book) => {
-					this.props.updateShelf(shelf, book)
-				})
-				break;
-			default:
-				break;
-		}
+		BooksAPI.get(id).then((book) => {
+			this.props.updateShelf(shelf, book)
+		})
 	}
 
 	render() {
@@ -43,7 +35,7 @@ class BookShelf extends Component {
 						pad={{ horizontal: "medium", vertical: "small" }}>
 						<Card
 							className="book-card"
-							thumbnail={book.imageLinks ? book.imageLinks.thumbnail : ''}
+							thumbnail={book.imageLinks ? book.imageLinks.thumbnail : 'https://upload.wikimedia.org/wikipedia/commons/b/b9/No_Cover.jpg'}
 							headingStrong={false}
 							contentPad='none'
 						>

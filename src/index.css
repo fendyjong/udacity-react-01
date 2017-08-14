@@ -9,22 +9,6 @@
 .book-tile .book-card h2 {
 	font-size: 1.1em;
 }
-/*
-.book-menu button {
-	position: absolute;
-	right: -20px;
-	top: -23px;
-	background-color: #501eb4;
-}
-
-.book-menu button .grommetux-button__icon {
-	padding: 8px;
-}
-
-.book-menu button .grommetux-button__icon:focus {
-	outline: none;
-}
-*/
 
 .book-shelf-changer {
 	position: relative;
@@ -38,8 +22,9 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: 20px;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
+
 .book-shelf-changer select {
 	width: 100%;
 	height: 100%;
@@ -48,6 +33,18 @@
 }
 
 .book-card-content {
-	position:relative;
+	position: relative;
 	top: -32px;
+}
+
+.currentlyReadingSection {
+	background-color: #BBDEFB;
+}
+
+.wantToReadSection {
+	background-color: #FFE0B2;
+}
+
+.readSection {
+	background-color: #F8BBD0;
 }

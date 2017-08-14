@@ -7,6 +7,7 @@ import Box from 'grommet/components/Box'
 import Button from 'grommet/components/Button'
 import Article from 'grommet/components/Article'
 import Section from 'grommet/components/Section'
+import Heading from 'grommet/components/Heading'
 
 import AddIcon from 'grommet/components/icons/base/Add';
 
@@ -15,7 +16,7 @@ import BookShelf from './BookShelf'
 class Main extends Component {
 
 	render() {
-		let { currentlyReading, wantToRead, read } = this.props.books
+		let { currentlyReading, wantToRead, read } = this.props.shelf
 		let { updateShelf } = this.props
 
 		return (
@@ -34,22 +35,22 @@ class Main extends Component {
 					</Box>
 				</Header>
 				<Article>
-					<Section>
-						<h1>Currently Reading</h1>
+					<Section className="currentlyReadingSection">
+						<Heading align="center">Currently Reading</Heading>
 						<BookShelf books={currentlyReading}
 											 updateShelf={(shelf, book) => {
 												 updateShelf(shelf, book)
 											 }} />
 					</Section>
-					<Section>
-						<h1>Wish List</h1>
+					<Section className="wantToReadSection">
+						<Heading align="center">Want To Read</Heading>
 						<BookShelf books={wantToRead}
 											 updateShelf={(shelf, book) => {
 												 updateShelf(shelf, book)
 											 }} />
 					</Section>
-					<Section>
-						<h1>Read</h1>
+					<Section className="readSection">
+						<Heading align="center">Read</Heading>
 						<BookShelf books={read}
 											 updateShelf={(shelf, book) => {
 												 updateShelf(shelf, book)
@@ -62,7 +63,7 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-	books: PropTypes.object.isRequired,
+	shelf: PropTypes.object,
 	updateShelf: PropTypes.func.isRequired
 }
 
