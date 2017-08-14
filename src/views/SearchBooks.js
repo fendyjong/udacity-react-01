@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import * as BooksAPI from '../api/BooksAPI'
 
@@ -63,14 +63,6 @@ class SearchBooks extends Component {
 		}
 	}
 
-	/**
-	 * Clear search query and get all books
-	 */
-	clearQuery = () => {
-		this.setState({ query: '' })
-		this.getAllBooks()
-	}
-
 	render() {
 		let { booksQueryResult } = this.state
 		let { updateShelf } = this.props
@@ -101,8 +93,8 @@ class SearchBooks extends Component {
 					</Box>
 				</Header>
 				<BookShelf books={booksQueryResult}
-									 updateShelf={(section, id) => {
-										 updateShelf(section, id)
+									 updateShelf={(shelf, book) => {
+										 updateShelf(shelf, book)
 									 }} />
 			</div>
 		)

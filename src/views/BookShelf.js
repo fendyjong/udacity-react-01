@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import * as BooksAPI from '../api/BooksAPI'
 
 import Tiles from 'grommet/components/Tiles'
 import Tile from 'grommet/components/Tile'
@@ -7,12 +8,20 @@ import Card from 'grommet/components/Card'
 
 class BookShelf extends Component {
 
-	bookShelfChanger = (id, section) => {
-		switch (section) {
+	/**
+	 * Get book by id and then update shelf state
+	 *
+	 * @param shelf
+	 * @param id
+	 */
+	bookShelfChanger = (shelf, id) => {
+		switch (shelf) {
 			case "currentlyReading":
 			case "wantToRead":
 			case "read":
-				this.props.updateShelf(section, id)
+				BooksAPI.get(id).then((book) => {
+					this.props.updateShelf(shelf, book)
+				})
 				break;
 			default:
 				break;
@@ -21,7 +30,6 @@ class BookShelf extends Component {
 
 	render() {
 		let { books } = this.props
-		console.log(books)
 
 		return (
 			<Tiles
@@ -41,7 +49,7 @@ class BookShelf extends Component {
 						>
 							<div className="book-shelf-changer">
 								<select id={book.id} onChange={(event) => {
-									this.bookShelfChanger(event.target.id, event.target.value)
+									this.bookShelfChanger(event.target.value, event.target.id)
 								}}>
 									<option value="none">Move to...</option>
 									<option value="currentlyReading">Currently Reading</option>

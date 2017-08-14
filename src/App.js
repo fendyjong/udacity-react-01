@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom'
-import * as BooksAPI from './api/BooksAPI'
 
 import Main from './views/Main'
 import SearchBooks from './views/SearchBooks'
@@ -19,17 +18,15 @@ class App extends Component {
 	/**
 	 * Update Personal Books which are currently reading, wish list and read
 	 *
-	 * @param section (currentlyReading, wantToRead, read
+	 * @param shelf (currentlyReading, wantToRead, read
 	 * @param id
 	 */
-	updateShelf = (section, id) => {
-		if (this.state.books[section].filter((obj) => {
-				return obj.id === id
+	updateShelf = (shelf, book) => {
+		if (this.state.books[shelf].filter((obj) => {
+				return obj.id === book.id
 			}).length === 0) {
 			this.setState((prevState) => {
-				BooksAPI.get(id).then((book) => {
-					prevState.books[section].push(book)
-				})
+				prevState.books[shelf].push(book)
 			})
 		}
 	}
@@ -42,15 +39,15 @@ class App extends Component {
 				<Route exact path="/"
 							 render={() => (
 								 <Main books={books}
-											 updateShelf={(section, id) => {
-												 this.updateShelf(section, id)
+											 updateShelf={(shelf, book) => {
+												 this.updateShelf(shelf, book)
 											 }} />
 							 )} />
 				<Route path="/search"
 							 render={() => (
 								 <SearchBooks books={books}
-															updateShelf={(section, id) => {
-																this.updateShelf(section, id)
+															updateShelf={(shelf, book) => {
+																this.updateShelf(shelf, book)
 															}} />
 							 )} />
 			</div>

@@ -37,22 +37,22 @@ class Main extends Component {
 					<Section>
 						<h1>Currently Reading</h1>
 						<BookShelf books={currentlyReading}
-											 updateShelf={(section, id) => {
-												 updateShelf(section, id)
+											 updateShelf={(shelf, book) => {
+												 updateShelf(shelf, book)
 											 }} />
 					</Section>
 					<Section>
 						<h1>Wish List</h1>
 						<BookShelf books={wantToRead}
-											 updateShelf={(section, id) => {
-												 updateShelf(section, id)
+											 updateShelf={(shelf, book) => {
+												 updateShelf(shelf, book)
 											 }} />
 					</Section>
 					<Section>
 						<h1>Read</h1>
 						<BookShelf books={read}
-											 updateShelf={(section, id) => {
-												 updateShelf(section, id)
+											 updateShelf={(shelf, book) => {
+												 updateShelf(shelf, book)
 											 }} />
 					</Section>
 				</Article>
