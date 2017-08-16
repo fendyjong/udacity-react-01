@@ -17,6 +17,7 @@ class Main extends Component {
 
 	render() {
 		let { shelves, shelvesBookId, updateShelf } = this.props
+		// used only for repeating shelf section
 		const shelvesName = { currentlyReading: 'Currently Reading', wantToRead: 'Want to Read', read: 'Read' };
 
 		return (
