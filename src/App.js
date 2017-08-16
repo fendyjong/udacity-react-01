@@ -8,21 +8,30 @@ import '../node_modules/grommet-css'
 class App extends Component {
 
 	state = {
-		shelf: {
+		shelves: {
 			currentlyReading: [],
 			wantToRead: [],
 			read: []
-		}
+		},
+		shelvesBookId: []
 	}
 
 	/**
 	 * When mounted, update state with the local storage
 	 */
 	componentDidMount() {
-		const shelf = JSON.parse(localStorage.getItem("shelf"))
-		if (shelf) {
+		const shelves = JSON.parse(localStorage.getItem("shelves"))
+		if (shelves) {
+			let shelvesBookId = []
+			for (let shelf of Object.keys(shelves)) {
+				for (let book of shelves[shelf]) {
+					shelvesBookId[book.id] = shelf
+				}
+			}
+
 			this.setState({
-				shelf: shelf
+				shelves: shelves,
+				shelvesBookId: shelvesBookId
 			})
 		}
 	}
@@ -38,81 +47,84 @@ class App extends Component {
 			case "currentlyReading":
 			case "wantToRead":
 			case "read":
-				if (this.state.shelf[shelf].filter((obj) => {
+				if (this.state.shelves[shelf].filter((obj) => {
 						return obj.id === book.id
 					}).length === 0) {
 					this.setState((prevState) => {
-						prevState.shelf[shelf].push(book)
-						localStorage.setItem("shelf", JSON.stringify(prevState.shelf))
+						prevState.shelves[shelf].push(book)
+						prevState.shelvesBookId[book.id] = shelf
+						localStorage.setItem("shelves", JSON.stringify(prevState.shelves))
 					})
 
 				}
 				break
 			default:
 		}
+
+		this.removeDuplicateBook(shelf, book)
 	}
 
 	/**
-	 * Move from one shelf to another
+	 * Move from one shelves to another
 	 *
 	 * @param shelf
 	 * @param book
 	 */
-	moveShelf = (shelf, book) => {
-		this.updateShelf(shelf, book)
-
-		let shelfs = []
+	removeDuplicateBook = (shelf, book) => {
+		let shelves = []
 		switch (shelf) {
 			case "currentlyReading":
-				shelfs.push("wantToRead")
-				shelfs.push("read")
+				shelves.push("wantToRead")
+				shelves.push("read")
 				break;
 			case "wantToRead":
-				shelfs.push("currentlyReading")
-				shelfs.push("read")
+				shelves.push("currentlyReading")
+				shelves.push("read")
 				break;
 			case "read":
-				shelfs.push("currentlyReading")
-				shelfs.push("wantToRead")
+				shelves.push("currentlyReading")
+				shelves.push("wantToRead")
 				break;
 			case "none":
-				shelfs.push("currentlyReading")
-				shelfs.push("wantToRead")
-				shelfs.push("read")
+				shelves.push("currentlyReading")
+				shelves.push("wantToRead")
+				shelves.push("read")
 				break;
 			default:
 		}
-		this.removeBookFromShelf_(shelfs, book)
+		this.removeBookFromShelf_(shelves, book)
 	}
 
-	removeBookFromShelf_ = (shelfs, book) => {
+	removeBookFromShelf_ = (shelves, book) => {
 		this.setState((prevState) => {
-			for (let shelf of shelfs) {
-				prevState.shelf[shelf] = prevState.shelf[shelf].filter((obj) => {
+			for (let shelf of shelves) {
+				prevState.shelves[shelf] = prevState.shelves[shelf].filter((obj) => {
 					return obj.id !== book.id
 				})
 			}
-			localStorage.setItem("shelf", JSON.stringify(prevState.shelf))
+			localStorage.setItem("shelves", JSON.stringify(prevState.shelves))
 		})
 	}
 
 	render() {
-		let { shelf } = this.state
+		let { shelves, shelvesBookId } = this.state
 
 		return (
 			<div>
 				<Route exact path="/"
 							 render={() => (
-								 <Main shelf={shelf}
+								 <Main shelves={shelves}
+											 shelvesBookId={shelvesBookId}
 											 updateShelf={(shelf, book) => {
-												 this.moveShelf(shelf, book)
+												 this.updateShelf(shelf, book)
 											 }} />
 							 )} />
 				<Route path="/search"
 							 render={() => (
-								 <SearchBooks updateShelf={(shelf, book) => {
-									 this.updateShelf(shelf, book)
-								 }} />
+								 <SearchBooks shelvesBookId={shelvesBookId}
+															updateShelf={(shelf, book) => {
+																this.updateShelf(shelf, book)
+															}} />
 							 )} />
 			</div>
 		)

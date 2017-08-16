@@ -65,7 +65,7 @@ class SearchBooks extends Component {
 
 	render() {
 		let { booksQueryResult } = this.state
-		let { updateShelf } = this.props
+		let { shelvesBookId, updateShelf } = this.props
 
 		return (
 			<div>
@@ -93,6 +93,7 @@ class SearchBooks extends Component {
 					</Box>
 				</Header>
 				<BookShelf books={booksQueryResult}
+									 shelvesBookId={shelvesBookId}
 									 updateShelf={(shelf, book) => {
 										 updateShelf(shelf, book)
 									 }} />
@@ -102,6 +103,7 @@ class SearchBooks extends Component {
 }
 
 SearchBooks.propTypes = {
+	shelvesBookId: PropTypes.array,
 	updateShelf: PropTypes.func.isRequired
 }
 

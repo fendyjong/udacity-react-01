@@ -9,7 +9,7 @@ import Card from 'grommet/components/Card'
 class BookShelf extends Component {
 
 	/**
-	 * Get book by id and update shelf state
+	 * Get book by id and update shelves state
 	 *
 	 * @param shelf
 	 * @param id
@@ -21,7 +21,7 @@ class BookShelf extends Component {
 	}
 
 	render() {
-		let { books } = this.props
+		let { shelvesBookId, books } = this.props
 
 		return (
 			<Tiles
@@ -40,10 +40,12 @@ class BookShelf extends Component {
 							contentPad='none'
 						>
 							<div className="book-shelf-changer">
-								<select id={book.id} onChange={(event) => {
-									this.bookShelfChanger(event.target.value, event.target.id)
-								}}>
-									<option value="none">Move to...</option>
+								<select id={book.id}
+												onChange={(event) => {
+													this.bookShelfChanger(event.target.value, event.target.id)
+												}}
+												defaultValue={shelvesBookId[book.id]}>
+									<option value="">Move to...</option>
 									<option value="currentlyReading">Currently Reading</option>
 									<option value="wantToRead">Want to Read</option>
 									<option value="read">Read</option>
@@ -70,6 +72,7 @@ class BookShelf extends Component {
 }
 
 BookShelf.propTypes = {
+	shelvesBookId: PropTypes.array,
 	books: PropTypes.array.isRequired,
 	updateShelf: PropTypes.func.isRequired
 }

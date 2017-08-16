@@ -16,8 +16,8 @@ import BookShelf from './BookShelf'
 class Main extends Component {
 
 	render() {
-		let { currentlyReading, wantToRead, read } = this.props.shelf
-		let { updateShelf } = this.props
+		let { currentlyReading, wantToRead, read } = this.props.shelves
+		let { shelvesBookId, updateShelf } = this.props
 
 		return (
 			<div>
@@ -37,21 +37,24 @@ class Main extends Component {
 				<Article>
 					<Section className="currentlyReadingSection">
 						<Heading align="center">Currently Reading</Heading>
-						<BookShelf books={currentlyReading}
+						<BookShelf shelvesBookId={shelvesBookId}
+											 books={currentlyReading}
 											 updateShelf={(shelf, book) => {
 												 updateShelf(shelf, book)
 											 }} />
 					</Section>
 					<Section className="wantToReadSection">
 						<Heading align="center">Want To Read</Heading>
-						<BookShelf books={wantToRead}
+						<BookShelf shelvesBookId={shelvesBookId}
+											 books={wantToRead}
 											 updateShelf={(shelf, book) => {
 												 updateShelf(shelf, book)
 											 }} />
 					</Section>
 					<Section className="readSection">
 						<Heading align="center">Read</Heading>
-						<BookShelf books={read}
+						<BookShelf shelvesBookId={shelvesBookId}
+											 books={read}
 											 updateShelf={(shelf, book) => {
 												 updateShelf(shelf, book)
 											 }} />
@@ -63,7 +66,8 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-	shelf: PropTypes.object,
+	shelves: PropTypes.object,
+	shelvesBookId: PropTypes.array,
 	updateShelf: PropTypes.func.isRequired
 }
 
