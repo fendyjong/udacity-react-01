@@ -16,8 +16,8 @@ import BookShelf from './BookShelf'
 class Main extends Component {
 
 	render() {
-		let { currentlyReading, wantToRead, read } = this.props.shelves
-		let { shelvesBookId, updateShelf } = this.props
+		let { shelves, shelvesBookId, updateShelf } = this.props
+		const shelvesName = { currentlyReading: 'Currently Reading', wantToRead: 'Want to Read', read: 'Read' };
 
 		return (
 			<div>
@@ -35,30 +35,14 @@ class Main extends Component {
 					</Box>
 				</Header>
 				<Article>
-					<Section className="currentlyReadingSection">
-						<Heading align="center">Currently Reading</Heading>
-						<BookShelf shelvesBookId={shelvesBookId}
-											 books={currentlyReading}
-											 updateShelf={(shelf, book) => {
-												 updateShelf(shelf, book)
-											 }} />
-					</Section>
-					<Section className="wantToReadSection">
-						<Heading align="center">Want To Read</Heading>
-						<BookShelf shelvesBookId={shelvesBookId}
-											 books={wantToRead}
-											 updateShelf={(shelf, book) => {
-												 updateShelf(shelf, book)
-											 }} />
-					</Section>
-					<Section className="readSection">
-						<Heading align="center">Read</Heading>
-						<BookShelf shelvesBookId={shelvesBookId}
-											 books={read}
-											 updateShelf={(shelf, book) => {
-												 updateShelf(shelf, book)
-											 }} />
-					</Section>
+					{Object.keys(shelvesName).map(shelfKey => (
+						<Section className={`${shelfKey}Section`}>
+							<Heading align="center">{shelvesName[shelfKey]}</Heading>
+							<BookShelf shelvesBookId={shelvesBookId}
+												 books={shelves[shelfKey]}
+												 updateShelf={updateShelf} />
+						</Section>
+					))}
 				</Article>
 			</div>
 		)

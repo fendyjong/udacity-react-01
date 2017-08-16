@@ -44,7 +44,7 @@ class BookShelf extends Component {
 												onChange={(event) => {
 													this.bookShelfChanger(event.target.value, event.target.id)
 												}}
-												defaultValue={shelvesBookId[book.id]}>
+												defaultValue={shelvesBookId[book.id] || ''}>
 									<option value="">Move to...</option>
 									<option value="currentlyReading">Currently Reading</option>
 									<option value="wantToRead">Want to Read</option>

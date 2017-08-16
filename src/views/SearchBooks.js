@@ -18,24 +18,6 @@ class SearchBooks extends Component {
 	}
 
 	/**
-	 * When the component have been mounted, get all books from the books API
-	 */
-	componentDidMount() {
-		this.getAllBooks()
-	}
-
-	/**
-	 * Get all books from the BooksAPI
-	 */
-	getAllBooks = () => {
-		BooksAPI.getAll().then(books => {
-			this.setState(() => ({
-				booksQueryResult: books
-			}))
-		})
-	}
-
-	/**
 	 * Whenever the user type, it will automatically search for the books if available.
 	 * If not available, return empty array
 	 *
@@ -59,7 +41,9 @@ class SearchBooks extends Component {
 				}
 			})
 		} else {
-			this.getAllBooks()
+			this.setState(() => ({
+				booksQueryResult: []
+			}))
 		}
 	}
 

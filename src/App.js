@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom'
+// import * as BooksAPI from './api/BooksAPI'
 
 import Main from './views/Main'
 import SearchBooks from './views/SearchBooks'
@@ -13,11 +14,15 @@ class App extends Component {
 			wantToRead: [],
 			read: []
 		},
+		// shelves book id is used to store and match book id with shelves. To be used in categorizing the drop down
 		shelvesBookId: []
 	}
 
 	/**
 	 * When mounted, update state with the local storage
+	 *
+	 * Local storage is used for state persistence so that when the web is refreshed, shelves state will still be
+	 * available
 	 */
 	componentDidMount() {
 		const shelves = JSON.parse(localStorage.getItem("shelves"))
@@ -35,6 +40,25 @@ class App extends Component {
 			})
 		}
 	}
+
+	/**
+	 * Get all books from the BooksAPI
+	 *
+	 * Not used since, I implement my own shelving with the local storage (to provide persistence)
+	 * I did not know about BooksAPI.getAll() and BooksAPI.update before creating this project. I just knew only after
+	 * a reviewer mentioned it.
+	 */
+	/*
+	getAllBooks = () => {
+		BooksAPI.getAll().then(books => {
+			console.log(books)
+			this.setState(() => ({
+				booksQueryResult: books
+			}))
+		})
+	}
+	*/
+
 
 	/**
 	 * Update Personal Books which are currently reading, wish list and read
@@ -55,7 +79,6 @@ class App extends Component {
 						prevState.shelvesBookId[book.id] = shelf
 						localStorage.setItem("shelves", JSON.stringify(prevState.shelves))
 					})
-
 				}
 				break
 			default:
