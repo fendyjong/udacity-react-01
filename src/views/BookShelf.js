@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import shortid from 'shortid'
 import * as BooksAPI from '../api/BooksAPI'
 
 import Tiles from 'grommet/components/Tiles'
 import Tile from 'grommet/components/Tile'
-import Card from 'grommet/components/Card'
+
+import Book from './Book'
 
 class BookShelf extends Component {
 
@@ -31,40 +33,12 @@ class BookShelf extends Component {
 				justify="center">
 				{books.map(book => (
 					<Tile
-						key={book.id}
+						key={shortid.generate()}
 						pad={{ horizontal: "medium", vertical: "small" }}>
-						<Card
-							className="book-card"
-							thumbnail={book.imageLinks ? book.imageLinks.thumbnail : 'https://upload.wikimedia.org/wikipedia/commons/b/b9/No_Cover.jpg'}
-							headingStrong={false}
-							contentPad='none'
-						>
-							<div className="book-shelf-changer">
-								<select id={book.id}
-												onChange={(event) => {
-													this.bookShelfChanger(event.target.value, event.target.id)
-												}}
-												defaultValue={shelvesBookId[book.id] || ''}>
-									<option value="">Move to...</option>
-									<option value="currentlyReading">Currently Reading</option>
-									<option value="wantToRead">Want to Read</option>
-									<option value="read">Read</option>
-									<option value="none">None</option>
-								</select>
-							</div>
-							<div className="book-card-content">
-								<h5 className="grommetux-heading">{book.title}</h5>
-								{book.authors && (
-									<label className="grommetux-label grommetux-label--margin-none grommetux-label--small">
-										{book.authors.map((author, key) => (
-											<div key={key}>{author}</div>
-										))}
-									</label>
-								)}
-							</div>
-						</Card>
+						<Book book={book}
+									shelvesBookId={shelvesBookId}
+									bookShelfChanger={this.bookShelfChanger} />
 					</Tile>
-
 				))}
 			</Tiles>
 		)

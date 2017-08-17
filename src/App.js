@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Route } from 'react-router-dom'
-// import * as BooksAPI from './api/BooksAPI'
+import React, { Component } from 'react'
+import { Switch, Route } from 'react-router-dom'
 
 import Main from './views/Main'
 import SearchBooks from './views/SearchBooks'
+import Page404 from './Page404'
 import '../node_modules/grommet-css'
 
 class App extends Component {
@@ -133,7 +133,7 @@ class App extends Component {
 		let { shelves, shelvesBookId } = this.state
 
 		return (
-			<div>
+			<Switch>
 				<Route exact path="/"
 							 render={() => (
 								 <Main shelves={shelves}
@@ -149,7 +149,8 @@ class App extends Component {
 																this.updateShelf(shelf, book)
 															}} />
 							 )} />
-			</div>
+				<Route component={Page404}/>
+			</Switch>
 		)
 	}
 }

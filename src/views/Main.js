@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import shortid from 'shortid'
 
 import Header from 'grommet/components/Header'
 import Title from 'grommet/components/Title'
@@ -37,7 +38,7 @@ class Main extends Component {
 				</Header>
 				<Article>
 					{Object.keys(shelvesName).map(shelfKey => (
-						<Section className={`${shelfKey}Section`}>
+						<Section className={`${shelfKey}Section`} key={shortid.generate()}>
 							<Heading align="center">{shelvesName[shelfKey]}</Heading>
 							<BookShelf shelvesBookId={shelvesBookId}
 												 books={shelves[shelfKey]}
