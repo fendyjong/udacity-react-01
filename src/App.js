@@ -14,7 +14,8 @@ class App extends Component {
 			wantToRead: [],
 			read: []
 		},
-		// shelves book id is used to store and match book id with shelves. To be used in categorizing the drop down
+		// shelves book id is used to store and match book id with shelves. To be used
+		// in categorizing the drop down
 		shelvesBookId: []
 	}
 
@@ -34,10 +35,7 @@ class App extends Component {
 				}
 			}
 
-			this.setState({
-				shelves: shelves,
-				shelvesBookId: shelvesBookId
-			})
+			this.setState({ shelves: shelves, shelvesBookId: shelvesBookId })
 		}
 	}
 
@@ -49,16 +47,15 @@ class App extends Component {
 	 * a reviewer mentioned it.
 	 */
 	/*
-	getAllBooks = () => {
-		BooksAPI.getAll().then(books => {
-			console.log(books)
-			this.setState(() => ({
-				booksQueryResult: books
-			}))
-		})
-	}
-	*/
-
+		getAllBooks = () => {
+				BooksAPI.getAll().then(books => {
+						console.log(books)
+						this.setState(() => ({
+								booksQueryResult: books
+						}))
+				})
+		}
+		*/
 
 	/**
 	 * Update Personal Books which are currently reading, wish list and read
@@ -75,7 +72,9 @@ class App extends Component {
 						return obj.id === book.id
 					}).length === 0) {
 					this.setState((prevState) => {
-						prevState.shelves[shelf].push(book)
+						prevState
+							.shelves[shelf]
+							.push(book)
 						prevState.shelvesBookId[book.id] = shelf
 						localStorage.setItem("shelves", JSON.stringify(prevState.shelves))
 					})
@@ -121,9 +120,11 @@ class App extends Component {
 	removeBookFromShelf_ = (shelves, book) => {
 		this.setState((prevState) => {
 			for (let shelf of shelves) {
-				prevState.shelves[shelf] = prevState.shelves[shelf].filter((obj) => {
-					return obj.id !== book.id
-				})
+				prevState.shelves[shelf] = prevState
+					.shelves[shelf]
+					.filter((obj) => {
+						return obj.id !== book.id
+					})
 			}
 			localStorage.setItem("shelves", JSON.stringify(prevState.shelves))
 		})
@@ -134,22 +135,23 @@ class App extends Component {
 
 		return (
 			<Switch>
-				<Route exact path="/"
-							 render={() => (
-								 <Main shelves={shelves}
-											 shelvesBookId={shelvesBookId}
-											 updateShelf={(shelf, book) => {
-												 this.updateShelf(shelf, book)
-											 }} />
-							 )} />
-				<Route path="/search"
-							 render={() => (
-								 <SearchBooks shelvesBookId={shelvesBookId}
-															updateShelf={(shelf, book) => {
-																this.updateShelf(shelf, book)
-															}} />
-							 )} />
-				<Route component={Page404}/>
+				<Route
+					exact
+					path="/"
+					render={() => (<Main
+						shelves={shelves}
+						shelvesBookId={shelvesBookId}
+						updateShelf={(shelf, book) => {
+							this.updateShelf(shelf, book)
+						}} />)} />
+				<Route
+					path="/search"
+					render={() => (<SearchBooks
+						shelvesBookId={shelvesBookId}
+						updateShelf={(shelf, book) => {
+							this.updateShelf(shelf, book)
+						}} />)} />
+				<Route component={Page404} />
 			</Switch>
 		)
 	}
